@@ -15,38 +15,50 @@
     <main>
       <section class="my-4">
         <div class="container">
-          <h1 class="text-center">Klasemen Liga 1 Indonesia</h1>
+          <h1 class="text-center">Form Input Klub</h1>
 
-          @if (Session::has('success'))
-            <div class="alert alert-success text-center">
-              <p>{{ Session::get('success') }}</p>
+          <form action="/add" method="POST">
+          @csrf
+        
+          @if ($errors->any())
+            <div class="alert alert-danger">
+              <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+              </ul>
             </div>
-              
           @endif
+
+          
           
 
-          <a href="{{ url('/add') }}" class="btn btn-primary float-end">Tambah Klub</a>
-
-          <table class="table">
+          <table id="table" class="table table-bordered">
             <thead>
-              <tr>
-                <th scope="col">Peringkat</th>
-                <th scope="col">Nama Klub</th>
+              <tr class="text-center">
+                <th scope="col">Nama</th>
+                <th scope="col">Kota</th>
+                <th scope="col">Aksi</th>
               </tr>
             </thead>
             <tbody>
-
-              @foreach ($klubs as $key=>$klub)
-                  
-              <tr>
-                <td style="width: 2%" class="text-center">{{ ++$key }}</td>
-                <td>{{ $klub->nama_klub }} {{ $klub->kota_klub }}</td>
+              <tr class="text-center">
+                <td>
+                  <input type="text" name="inputs[0][nama_klub]" placeholder="Masukan nama" class="form-control" required>
+                </td>
+                <td>
+                  <input type="text" name="inputs[0][kota_klub]" placeholder="Masukan kota" class="form-control" required>
+                </td>
+                <td>
+                  <button type="button" class="btn btn-danger">Hapus</button>
+                </td>
               </tr>
-
-              @endforeach
-
             </tbody>
           </table>
+
+          <button type="button" name="add" id="add" class="btn btn-success">[ + ]</button>
+          <button type="submit" class="btn btn-primary col-md-2">Simpan</button>
+          </form>
 
             
         </div>
@@ -71,7 +83,7 @@
         ++i;
 
         $('#table').append(
-          `<tr>
+          `<tr class="text-center">
                 <td>
                   <input type="text" name="inputs[`+i+`][nama_klub]" placeholder="Masukan nama" class="form-control" required>
                 </td>
@@ -79,7 +91,7 @@
                   <input type="text" name="inputs[`+i+`][kota_klub]" placeholder="Masukan kota" class="form-control" required>
                 </td>
                 <td>
-                  <button type="button" class="btn btn-danger remove-table-row">[-]</button>
+                  <button type="button" class="btn btn-danger remove-table-row">[ - ]</button>
                 </td>
               </tr>`
         );
