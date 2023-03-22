@@ -18,3 +18,7 @@ use Illuminate\Support\Facades\Route;
 //     return view('welcome');
 // });
 Route::get('/', [DashboardController::class, 'index']);
+Route::get('/add', [DashboardController::class, 'add']);
+Route::post('/add', [DashboardController::class, 'store']);
+Route::get('/add-goal', [DashboardController::class, 'addGoal']);
+Route::post('/add-goal', [DashboardController::class, 'storeGoal']);
